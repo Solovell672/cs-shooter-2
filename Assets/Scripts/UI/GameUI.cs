@@ -1,29 +1,22 @@
 using UnityEngine;
-using TMPro;
 
 public class GameUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI ammoText;
-    [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private TextMeshProUGUI waveText;
-    [SerializeField] private TextMeshProUGUI enemyCountText;
+    [SerializeField] private Transform ammoText;
+    [SerializeField] private Transform healthText;
+    [SerializeField] private Transform waveText;
+    [SerializeField] private Transform enemyCountText;
     [SerializeField] private RectTransform healthBar;
     
     private WeaponManager weaponManager;
     private PlayerHealth playerHealth;
     private WaveManager waveManager;
-    private CanvasGroup healthBarGroup;
 
     private void Start()
     {
         weaponManager = FindObjectOfType<WeaponManager>();
         playerHealth = FindObjectOfType<PlayerHealth>();
         waveManager = FindObjectOfType<WaveManager>();
-        
-        if (healthBar != null)
-        {
-            healthBarGroup = healthBar.GetComponent<CanvasGroup>();
-        }
     }
 
     private void Update()
@@ -39,7 +32,7 @@ public class GameUI : MonoBehaviour
         {
             int ammoInMag = weaponManager.GetAmmoInMagazine;
             int totalAmmo = weaponManager.GetTotalAmmo;
-            ammoText.text = $"{ammoInMag} / {totalAmmo}";
+            Debug.Log($"Ammo: {ammoInMag} / {totalAmmo}");
         }
     }
 
@@ -52,7 +45,7 @@ public class GameUI : MonoBehaviour
             
             if (healthText != null)
             {
-                healthText.text = $"HP: {health:F0} / {maxHealth}";
+                Debug.Log($"Health: {health:F0} / {maxHealth}");
             }
             
             if (healthBar != null)
@@ -69,12 +62,12 @@ public class GameUI : MonoBehaviour
         {
             if (waveText != null)
             {
-                waveText.text = $"Wave: {waveManager.GetCurrentWave}";
+                Debug.Log($"Wave: {waveManager.GetCurrentWave}");
             }
             
             if (enemyCountText != null)
             {
-                enemyCountText.text = $"Enemies: {waveManager.GetActiveEnemyCount}";
+                Debug.Log($"Enemies: {waveManager.GetActiveEnemyCount}");
             }
         }
     }
