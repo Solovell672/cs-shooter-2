@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class GameUI : MonoBehaviour
@@ -8,17 +7,23 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private TextMeshProUGUI enemyCountText;
-    [SerializeField] private Image healthBar;
+    [SerializeField] private RectTransform healthBar;
     
     private WeaponManager weaponManager;
     private PlayerHealth playerHealth;
     private WaveManager waveManager;
+    private CanvasGroup healthBarGroup;
 
     private void Start()
     {
         weaponManager = FindObjectOfType<WeaponManager>();
         playerHealth = FindObjectOfType<PlayerHealth>();
         waveManager = FindObjectOfType<WaveManager>();
+        
+        if (healthBar != null)
+        {
+            healthBarGroup = healthBar.GetComponent<CanvasGroup>();
+        }
     }
 
     private void Update()
@@ -52,7 +57,8 @@ public class GameUI : MonoBehaviour
             
             if (healthBar != null)
             {
-                healthBar.fillAmount = health / maxHealth;
+                float fillAmount = health / maxHealth;
+                healthBar.localScale = new Vector3(fillAmount, 1, 1);
             }
         }
     }
